@@ -4,30 +4,30 @@ import mongoose from 'mongoose';
 const LocationSchema = new mongoose.Schema({
 	ID: {
 		type: Number,
-		required: true,
+		required: false,
 	},
 	DISTRICT: {
 		type: String,
-		required: true,
+		required: false,
 	},
 	COUNTY: {
 		type: String,
-		required: true,
+		required: false,
 	},
 	NameMobileWeb: {
 		type: String,
-		required: true,
+		required: false,
 	},
 	LocationMobileWeb: {
 		type: String,
-		required: true,
+		required: false,
 	},
 	DescriptionMobileWeb: {
 		type: String,
-		required: true,
+		required: false,
 	},
 	PHONE_NMBR: {
-		type: Number,
+		type: String,
 		required: false,
 	},
 	FEE: {
@@ -116,11 +116,11 @@ const LocationSchema = new mongoose.Schema({
 	},
 	LATITUDE: {
 		type: Number,
-		required: true,
+		required: false,
 	},
 	LONGITUDE: {
 		type: Number,
-		required: true,
+		required: false,
 	},
 	Photo_1: {
 		type: String,
@@ -148,4 +148,5 @@ const LocationSchema = new mongoose.Schema({
 	},
 });
 
-export default mongoose.models.User || mongoose.model('User', UserSchema);
+export default mongoose.models.Location ||
+	mongoose.model('Location', LocationSchema);
