@@ -18,8 +18,12 @@ h3 {
 	line-height: 3rem;
 }
 
-h6 {
+h5 {
 	font-size: 1.1rem;
+}
+
+h6 {
+	font-size: 0.8rem;
 }
 
 label {
