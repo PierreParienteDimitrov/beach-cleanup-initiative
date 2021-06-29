@@ -4,11 +4,11 @@ import { validateEmail } from '../../util/validations';
 import SignupBtn from '../buttons/SignupBtn';
 
 async function createUser(name, email, password) {
-	console.log(email);
+	// console.log(email);
 
 	const response = await fetch('api/auth/create-user', {
 		method: 'POST',
-		body: JSON.stringify({ email, password }),
+		body: JSON.stringify({ name, email, password }),
 		headers: {
 			'Content-Type': 'application/json',
 		},
