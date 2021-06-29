@@ -4,7 +4,7 @@ const BeachDetailPage = ({ data }) => {
 	const { NameMobileWeb } = data[0];
 	return (
 		<div>
-			<h1>{NameMobileWeb}</h1>
+			<h1>{NameMobileWeb && NameMobileWeb}</h1>
 		</div>
 	);
 };
