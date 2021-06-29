@@ -1,5 +1,5 @@
-import { connectToDatabase } from '../../util/mongodb';
-import Location from '../../models/location';
+import Link from 'next/link';
+import { getAllData } from '../../util/getData';
 
 const beaches = ({ locations }) => {
 	return (
@@ -9,7 +9,13 @@ const beaches = ({ locations }) => {
 			<div>
 				<ul>
 					{locations.map((el) => {
-						return <li key={el._id}>{el.NameMobileWeb}</li>;
+						return (
+							<li key={el._id}>
+								<Link href={`/beaches/${el.URL}`}>
+									<a>{el.NameMobileWeb}</a>
+								</Link>
+							</li>
+						);
 					})}
 				</ul>
 			</div>
@@ -20,13 +26,7 @@ const beaches = ({ locations }) => {
 export default beaches;
 
 export async function getStaticProps() {
-	await connectToDatabase();
-
-	const allLocations = await Location.find();
-
-	// console.log(allLocations);
-
-	const locations = JSON.parse(JSON.stringify(allLocations));
+	const locations = await getAllData();
 
 	return {
 		props: { locations },
