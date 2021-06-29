@@ -1,4 +1,5 @@
 import { connectToDatabase } from '../../util/mongodb';
+import urlEncoder from '../../util/urlEncoder';
 import Location from '../../models/location';
 
 // async function createLocation(locations) {
@@ -25,8 +26,12 @@ export default async function handler(req, res) {
 
 		const locations = await data.json();
 
+		// Adding URL key to object
+		// const newArray = await urlEncoder(locations);
+		// console.log(newArray);
+
 		// Connection to Database
-		await connectToDatabase();
+		// await connectToDatabase();
 
 		// Delete Locations
 		// Location.deleteMany({}, function (err) {
@@ -35,14 +40,14 @@ export default async function handler(req, res) {
 		// });
 
 		// Adding Locations
-		// locations.map((el) => {
+		// newArray.map((el) => {
 		// 	Location.create(el, function (err) {
 		// 		if (err) console.log(err);
 		// 		console.log('Successful created');
 		// 	});
 		// });
 
-		res.status(200).json({ message: 'success' });
+		res.status(200).json({ message: 'success', locations });
 	} catch (err) {
 		res.status(400).json({ success: false });
 	}

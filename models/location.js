@@ -146,6 +146,10 @@ const LocationSchema = new mongoose.Schema({
 		type: String,
 		required: false,
 	},
+	URL: {
+		type: String,
+		required: false,
+	},
 });
 
 export default mongoose.models.Location ||

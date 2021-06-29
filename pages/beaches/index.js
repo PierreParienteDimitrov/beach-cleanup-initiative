@@ -1,8 +1,7 @@
-import { connectToDatabase } from '../util/mongodb';
-import Location from '../models/location';
+import { connectToDatabase } from '../../util/mongodb';
+import Location from '../../models/location';
 
 const beaches = ({ locations }) => {
-	console.log(locations[0]);
 	return (
 		<div>
 			<h1>All beaches</h1>
