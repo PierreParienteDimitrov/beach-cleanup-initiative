@@ -1,10 +1,17 @@
+import { useRouter } from 'next/router';
 import { getOneByParams, getURLData } from '../../util/getData';
 
 const BeachDetailPage = ({ data }) => {
+	const router = useRouter();
+
+	if (router.isFallback) {
+		return <div>Loading....</div>;
+	}
+
 	const { NameMobileWeb } = data[0];
 	return (
 		<div>
-			<h1>{NameMobileWeb && NameMobileWeb}</h1>
+			<h1>{NameMobileWeb}</h1>
 		</div>
 	);
 };
@@ -41,6 +48,6 @@ export async function getStaticPaths() {
 	// Returning params objects
 	return {
 		paths: params,
-		fallback: true,
+		fallback: false,
 	};
 }
