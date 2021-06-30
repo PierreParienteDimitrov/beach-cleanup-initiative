@@ -38,7 +38,7 @@ export default async function handler(req, res) {
 
 		// Checking email in db
 		const existingUser = await User.findOne({ email: email });
-		console.log(existingUser);
+		// console.log(existingUser);
 
 		if (existingUser) {
 			res.status(422).json({ message: 'user exists already', alert: true });
