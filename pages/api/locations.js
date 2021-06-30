@@ -1,5 +1,5 @@
 import { connectToDatabase } from '../../util/mongodb';
-import Location from '../../models/Location';
+import Location from '../../models/location';
 
 export default async function handler(req, res) {
 	// const { method } = req;
