@@ -1,12 +1,13 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { validateEmail } from '../../util/validations';
 import SignupBtn from '../buttons/SignupBtn';
 
 async function createUser(name, email, password) {
 	// console.log(email);
 
-	const response = await fetch('api/auth/create-user', {
+	const response = await fetch('/api/auth/create-user', {
 		method: 'POST',
 		body: JSON.stringify({ name, email, password }),
 		headers: {
@@ -15,10 +16,11 @@ async function createUser(name, email, password) {
 	});
 
 	const data = await response.json();
+	console.log(data);
 
-	if (!response.ok) {
-		throw new Error(data.message || 'Something went wrong!');
-	}
+	// if (!response.ok) {
+	// 	throw new Error(data.message || 'Something went wrong!');
+	// }
 
 	return data;
 }
@@ -33,6 +35,10 @@ const SignupForm = () => {
 	const [nameAlert, setNameAlert] = useState(false);
 	const [emailAlert, setEmailAlert] = useState(false);
 	const [passwordAlert, setPasswordAlert] = useState(false);
+	const [existingUserAlert, setexistingUserAlert] = useState(false);
+
+	// Router
+	const router = useRouter();
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
@@ -44,6 +50,7 @@ const SignupForm = () => {
 		setNameAlert(false);
 		setEmailAlert(false);
 		setPasswordAlert(false);
+		setexistingUserAlert(false);
 
 		// Name validation
 		if (!name) {
@@ -63,6 +70,12 @@ const SignupForm = () => {
 		}
 
 		const result = await createUser(name, email, password);
+
+		setexistingUserAlert(result.alert);
+
+		if (result.success) {
+			router.replace('/profile');
+		}
 	};
 
 	return (
@@ -70,12 +83,18 @@ const SignupForm = () => {
 			<div className='mb-8 text-center'>
 				<h3>Create your Free Account</h3>
 
-				<div className='flex items-center'>
+				<div className='flex items-center justify-center'>
 					<h5 className='mr-1'>Already have an account?</h5>
 					<Link href='/login'>
 						<a className='text-blue-600'>Sign In</a>
 					</Link>
 				</div>
+
+				{existingUserAlert && (
+					<h6 className='mt-2 text-red-500'>
+						User already exist. Sign In to your account instead.
+					</h6>
+				)}
 			</div>
 
 			{/* Form */}
