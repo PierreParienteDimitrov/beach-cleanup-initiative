@@ -1,10 +1,12 @@
-import React from 'react';
+import LoginForm from '../components/auth/LoginForm';
 
 const login = () => {
 	return (
-		<div>
-			<h1>Sign in to your account</h1>
-		</div>
+		<>
+			<div className='relative'>
+				<LoginForm />
+			</div>
+		</>
 	);
 };
 

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { Provider } from 'next-auth/client';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import '../styles/globals.css';
@@ -28,7 +29,11 @@ function MyApp({ Component, pageProps }) {
 		};
 	}, [router]);
 
-	return <Component {...pageProps} />;
+	return (
+		<Provider session={pageProps.session}>
+			<Component {...pageProps} />
+		</Provider>
+	);
 }
 
 export default MyApp;
