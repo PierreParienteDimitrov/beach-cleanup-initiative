@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { signIn } from 'next-auth/client';
 import { validateEmail } from '../../util/validations';
 import SignupBtn from '../buttons/SignupBtn';
 
@@ -16,7 +17,6 @@ async function createUser(name, email, password) {
 	});
 
 	const data = await response.json();
-	console.log(data);
 
 	// if (!response.ok) {
 	// 	throw new Error(data.message || 'Something went wrong!');
@@ -74,7 +74,15 @@ const SignupForm = () => {
 		setexistingUserAlert(result.alert);
 
 		if (result.success) {
-			router.replace('/profile');
+			const signUserIn = await signIn('credentials', {
+				redirect: false,
+				email: email,
+				password: password,
+			});
+
+			if (signUserIn.ok) {
+				router.replace('/profile');
+			}
 		}
 	};
 
