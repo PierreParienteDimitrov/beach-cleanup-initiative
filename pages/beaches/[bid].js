@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { getOneByParams, getURLData } from '../../util/getData';
-import { validatePicture } from '../../util/validations';
+import { validatePicture, validateAmenities } from '../../util/validations';
+import MobileContainer from '../../components/Layouts/MobileContainer';
 
 const BeachDetailPage = ({ data }) => {
 	const router = useRouter();
@@ -50,22 +51,41 @@ const BeachDetailPage = ({ data }) => {
 
 	// Validate picture url
 	const pictureUrl = validatePicture(Photo_1, Photo_2, Photo_3, Photo_4);
-	console.log(pictureUrl);
+	// console.log(pictureUrl);
+
+	// Validate amenities
+	const filteredAmenities = validateAmenities(
+		PARKING,
+		RESTROOMS,
+		VISTOR_CTR,
+		DOG_FRIENDLY,
+		EZ4STROLLERS,
+		PCNC_AREA,
+		CAMPGROUND,
+		VOLLEYBALL
+	);
 
 	return (
-		<main>
-			<div>
-				<Image
-					src={Photo_1}
-					alt='Yellow footprint'
-					layout='fill'
-					objectFit='cover'
-					objectPosition='center'
-				/>
-			</div>
-			<div className='relative'>
-				<h1>{NameMobileWeb}</h1>
-			</div>
+		<main className='flex flex-col'>
+			<Image
+				src={pictureUrl}
+				alt={NameMobileWeb}
+				layout='responsive'
+				width={700}
+				height={475}
+			/>
+			<MobileContainer>
+				<div className='pb-6 border-b-2'>
+					<h1>{NameMobileWeb}</h1>
+				</div>
+
+				<div className='py-6 border-b-2'>
+					<h2>Amenities</h2>
+					{filteredAmenities.map((el, index) => {
+						return <p key={index}>{el.info}</p>;
+					})}
+				</div>
+			</MobileContainer>
 		</main>
 	);
 };
