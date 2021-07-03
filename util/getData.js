@@ -14,6 +14,18 @@ export async function getAllData() {
 	return locations;
 }
 
+export async function getLimitData(number) {
+	await connectToDatabase();
+
+	const allLocations = await Location.find().limit(number);
+
+	const locations = JSON.parse(JSON.stringify(allLocations));
+
+	// console.log(locations);
+
+	return locations;
+}
+
 export async function getURLData() {
 	await connectToDatabase();
 
