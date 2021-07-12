@@ -3,22 +3,38 @@ import Link from 'next/link';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getAllData, getLimitData } from '../../util/getData';
 
+async function getBeaches() {
+	const data = await fetch('/api/locations');
+	const allBeaches = await data.json();
+
+	console.log(allBeaches);
+
+	// return allBeaches;
+}
+
 const Beaches = ({ allBeaches, firstFifty }) => {
+	const [startIndex, setStartIndex] = useState(50);
+	const [endIndex, setEndIndex] = useState(100);
 	const [beaches, setBeaches] = useState(firstFifty);
 	const [hasMore, setHasMore] = useState(true);
 
-	// console.log('beaches length: ' + beaches.length);
+	async function fetchData() {
+		// Calling API to send only subset of array
+		const data = await fetch(
+			`/api/locations?start=${startIndex}&&end=${endIndex}`
+		);
 
-	function fetchData() {
-		const remainingBeaches = allBeaches.slice(beaches.length);
-		// console.log('remaning beaches: ' + remainingBeaches.length);
+		const nextBeaches = await data.json();
 
-		const nextFifty = remainingBeaches.slice(0, 50);
-		console.log('next fifty: ' + nextFifty.length);
+		// Adding new array to previous array
+		setBeaches([...beaches, ...nextBeaches]);
 
-		setBeaches([...beaches, ...nextFifty]);
+		// Updating index
+		setStartIndex(startIndex + 50);
+		setEndIndex(endIndex + 50);
 	}
 
+	// Checking if hasMore is still true
 	useEffect(() => {
 		setHasMore(allBeaches.length > beaches.length ? true : false);
 	}, [beaches, allBeaches.length]);

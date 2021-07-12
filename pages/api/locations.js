@@ -1,18 +1,19 @@
 import { connectToDatabase } from '../../util/mongodb';
-import Location from '../../models/location';
+import { getRangeData } from '../../util/getData';
 
 export default async function handler(req, res) {
 	// const { method } = req;
 
+	const startIndex = parseInt(req.query.start);
+	const endIndex = parseInt(req.query.end);
+
+	// console.log(start);
+	// console.log(end);
+
 	try {
-		// Connection to Database
-		await connectToDatabase();
-
-		const allLocations = await Location.find();
-
-		// console.log(allLocations);
-
-		res.status(200).json(allLocations);
+		const results = await getRangeData(startIndex, endIndex);
+		res.status(200).json(results);
+		return results;
 	} catch (err) {
 		res.status(400).json({ success: false });
 	}
