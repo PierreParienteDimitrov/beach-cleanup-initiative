@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const LocationSchema = new mongoose.Schema({
+const BeachSchema = new mongoose.Schema({
 	ID: {
 		type: Number,
 		required: false,
@@ -151,5 +151,4 @@ const LocationSchema = new mongoose.Schema({
 	},
 });
 
-export default mongoose.models.Location ||
-	mongoose.model('Location', LocationSchema);
+export default mongoose.models.Beach || mongoose.model('Beach', BeachSchema);
