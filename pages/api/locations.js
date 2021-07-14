@@ -1,5 +1,5 @@
 import { connectToDatabase } from '../../util/mongodb';
-import { getRangeData } from '../../util/getData';
+import { getAllData, getRangeData } from '../../util/getData';
 
 export default async function handler(req, res) {
 	// const { method } = req;
@@ -11,9 +11,13 @@ export default async function handler(req, res) {
 	// console.log(end);
 
 	try {
-		const results = await getRangeData(startIndex, endIndex);
-		res.status(200).json(results);
-		return results;
+		if (startIndex && endIndex) {
+			const results = await getRangeData(startIndex, endIndex);
+			res.status(200).json(results);
+		} else {
+			const results = await getAllData();
+			res.status(200).json(results);
+		}
 	} catch (err) {
 		res.status(400).json({ success: false });
 	}
