@@ -22,27 +22,6 @@ const ResponsiveContainer = ({ children }) => {
 			)}
 		</div>
 	);
-
-	// if (isDesktop) {
-	// 	return <DesktopContainer child={children} />;
-	// }
-
-	// if (isMobile) {
-	// 	return <MobileContainer child={children} />;
-	// }
-
-	// return (
-
-	//     {isDesktop && <DesktopContainer child={children}/> }
-	//     )
-
-	// if (isDesktop) {
-	// 	return <p>Hello {children}</p>;
-	// }
-
-	// if (!isDesktop && isMobile) {
-	// 	return <p>You {children}</p>;
-	// }
 };
 
 export default ResponsiveContainer;
