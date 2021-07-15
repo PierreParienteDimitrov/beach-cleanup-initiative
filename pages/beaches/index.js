@@ -2,20 +2,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getAllData, getLimitData } from '../../util/getData';
+import Card from '../../components/Cards/Card';
+import MobileContainer from '../../components/Layouts/MobileContainer';
 
-async function getBeaches() {
-	const data = await fetch('/api/locations');
-	const allBeaches = await data.json();
-
-	console.log(allBeaches);
-
-	// return allBeaches;
-}
-
-const Beaches = ({ allBeaches, firstFifty }) => {
-	const [startIndex, setStartIndex] = useState(50);
+const Beaches = ({ allBeaches, firstBeaches }) => {
+	const [startIndex, setStartIndex] = useState(20);
 	const [endIndex, setEndIndex] = useState(100);
-	const [beaches, setBeaches] = useState(firstFifty);
+	const [beaches, setBeaches] = useState(firstBeaches);
 	const [hasMore, setHasMore] = useState(true);
 
 	async function fetchData() {
@@ -30,8 +23,8 @@ const Beaches = ({ allBeaches, firstFifty }) => {
 		setBeaches([...beaches, ...nextBeaches]);
 
 		// Updating index
-		setStartIndex(startIndex + 50);
-		setEndIndex(endIndex + 50);
+		setStartIndex(startIndex + 20);
+		setEndIndex(endIndex + 20);
 	}
 
 	// Checking if hasMore is still true
@@ -40,31 +33,32 @@ const Beaches = ({ allBeaches, firstFifty }) => {
 	}, [beaches, allBeaches.length]);
 
 	return (
-		<div>
-			<h1>All beaches</h1>
-
+		<MobileContainer>
 			<div>
-				<ul>
-					<InfiniteScroll
-						dataLength={beaches.length}
-						next={fetchData}
-						hasMore={hasMore}
-						loader={<h4>Loading...</h4>}
-						endMessage={<p>No more beaches</p>}
-					>
-						{beaches.map((el) => {
-							return (
-								<li key={el._id}>
-									<Link href={`/beaches/${el.URL}`}>
-										<a>{el.NameMobileWeb}</a>
-									</Link>
-								</li>
-							);
-						})}
-					</InfiniteScroll>
-				</ul>
+				<h1>All beaches</h1>
+
+				<div>
+					<ul>
+						<InfiniteScroll
+							dataLength={beaches.length}
+							next={fetchData}
+							hasMore={hasMore}
+							loader={<h4>Loading...</h4>}
+							endMessage={<p>No more beaches</p>}
+							className='md:grid md:grid-flow-row md:grid-cols-3 md:grid-rows-3 md:gap-4'
+						>
+							{beaches.map((el) => {
+								return (
+									<div key={el._id}>
+										<Card beach={el} />
+									</div>
+								);
+							})}
+						</InfiniteScroll>
+					</ul>
+				</div>
 			</div>
-		</div>
+		</MobileContainer>
 	);
 };
 
@@ -72,9 +66,9 @@ export default Beaches;
 
 export async function getStaticProps() {
 	const allBeaches = await getAllData();
-	const firstFifty = await getLimitData(50);
+	const firstBeaches = await getLimitData(20);
 
 	return {
-		props: { allBeaches, firstFifty },
+		props: { allBeaches, firstBeaches },
 	};
 }
