@@ -4,6 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { getAllData, getLimitData } from '../../util/getData';
 import Card from '../../components/Cards/Card';
 import MobileContainer from '../../components/Layouts/MobileContainer';
+import ResponsiveContainer from '../../components/Layouts/ResponsiveContainer';
 
 const Beaches = ({ allBeaches, firstBeaches }) => {
 	const [startIndex, setStartIndex] = useState(20);
@@ -33,7 +34,8 @@ const Beaches = ({ allBeaches, firstBeaches }) => {
 	}, [beaches, allBeaches.length]);
 
 	return (
-		<MobileContainer>
+		<ResponsiveContainer>
+			{/* <MobileContainer> */}
 			<div>
 				<h1>All beaches</h1>
 
@@ -48,17 +50,14 @@ const Beaches = ({ allBeaches, firstBeaches }) => {
 							className='md:grid md:grid-flow-row md:grid-cols-3 md:grid-rows-3 md:gap-4'
 						>
 							{beaches.map((el) => {
-								return (
-									<div key={el._id}>
-										<Card beach={el} />
-									</div>
-								);
+								return <Card beach={el} key={el._id} />;
 							})}
 						</InfiniteScroll>
 					</ul>
 				</div>
 			</div>
-		</MobileContainer>
+			{/* </MobileContainer> */}
+		</ResponsiveContainer>
 	);
 };
 

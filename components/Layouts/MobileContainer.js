@@ -1,7 +1,7 @@
 import React from 'react';
 
-const MobileContainer = ({ children }) => {
-	return <div className='p-4 bg-gray-50'>{children}</div>;
+const MobileContainer = ({ child }) => {
+	return <div className='p-4 bg-gray-50'>{child}</div>;
 };
 
 export default MobileContainer;
